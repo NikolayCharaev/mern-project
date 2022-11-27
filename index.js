@@ -30,9 +30,9 @@ app.get('/auth/me', checkAuth, UserController.getMe);
 
 // когда мы создаем Rest Api и у нас есть CRUD, то не надо указывать запросы по типу '/post/delete, post/update' и т.п. Жедательно указывать что у тебя есть один путь и у него есть отдельные методы. Ниже будут примеры
 app.get('/posts', PostController.getAll) // Получение всех статей;  Проверять токен нет смысла так что checkAuth можно убрать
-// app.get('/posts/:id', checkAuth, PostController.getOne) // получение одной статьи
-// app.delete('/posts', checkAuth, PostController.remove)  // удаление статьи
-// app.patch('/posts', checkAuth, PostController.update) // обновление списка статей
+app.get('/posts/:id', PostController.getOne) // получение одной статьи
+app.delete('/posts/:id', checkAuth, PostController.remove)  // удаление статьи
+app.patch('/posts/:id', checkAuth, PostController.update) // обновление списка статей
 app.post('/posts', checkAuth, postCreateValidation, PostController.create); // создание статьи
 
 app.listen(5555, (err) => {
