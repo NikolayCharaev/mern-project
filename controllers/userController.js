@@ -46,12 +46,12 @@ export const login = async (req, res) => {
 export const register = async (req, res) => {
   // передаем вторым параметром registerValidation для того что-бы введенные нами данные прошли валидацию
   try {
-    // оборачиваем код в try/ catch чтобы приложение не вылетало в случае ошибки
-    const errors = validationResult(req); // передаем req в validationResult для проверки на ошибки
-    if (!errors.isEmpty()) {
-      // проверка переменной errors на пустоту
-      return res.status(400).json(errors.array()); // в случае ошибки возвращаем все ощибки в формате json для ознакомления
-    }
+    // // оборачиваем код в try/ catch чтобы приложение не вылетало в случае ошибки
+    // const errors = validationResult(req); // передаем req в validationResult для проверки на ошибки
+    // if (!errors.isEmpty()) {
+    //   // проверка переменной errors на пустоту
+    //   return res.status(400).json(errors.array()); // в случае ошибки возвращаем все ощибки в формате json для ознакомления
+    // }
 
     const password = req.body.password; // вытаскиваем пароль для его шифрования
     const salt = await bcrypt.genSalt(10); // переменная salt это что-то вроде алгоритма шифрования нашего пароля
