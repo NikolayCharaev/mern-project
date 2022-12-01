@@ -1,6 +1,9 @@
 import express from 'express'; //библиотека, позволяющая создавать специальный веб-сервер с помощью NodeJS
 import mongoose from 'mongoose'; // библиотека MongoDB для коннекта с базой данных, в которой у нас будет храниться вся логика приложения.
 import multer from 'multer'; // библиотека для реализации загрузки изображений на сервер
+
+import cors from 'cors' //библиотека для избажания ошибки CORC Policy
+
 import {
   registerValidation,
   loginValidation,
@@ -38,10 +41,16 @@ const storage = multer.diskStorage({
 const upload = multer({ storage }); // объединяем multer и storage
 app.use('/uploads', express.static('uploads'));
 app.use(express.json()); // для того чтобы express приложение могло понимать логику json :) эта команда позволит читать json, который будет приходить к нам в наших запросах. Без этой команды будет возвращаться undefined
-
+app.use(cors())
 app.post('/auth/login', loginValidation, handleValidationsErrors, UserController.login);
 app.post('/auth/register', registerValidation, handleValidationsErrors, UserController.register);
 app.get('/auth/me', checkAuth, UserController.getMe);
+
+
+app.get('/tags', PostController.getLastTags);
+// app.get('/posts/tags', PostController.getLastTags);
+
+
 
 app.post('/upload', checkAuth, upload.single('image'), (req, res) => {
   try {
@@ -67,7 +76,7 @@ app.patch(
   handleValidationsErrors,
   PostController.update,
 ); // обновление списка статей
-app.post('/posts', checkAuth, postCreateValidation, handleValidationsErrors, PostController.create); // создание статьи
+app.post('/posts', checkAuth, postCreateValidation, PostController.create); // создание статьи
 
 app.listen(5555, (err) => {
   // прослушивание сервера localhost:5555
