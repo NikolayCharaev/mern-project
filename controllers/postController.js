@@ -6,7 +6,6 @@ export const getAll = async (req, res) => {
   // Получение всех статей
   try {
     const posts = await PostModel.find().populate('user').exec();
-
     res.json(posts);
   } catch (err) {
     console.log(err);
@@ -79,7 +78,7 @@ export const remove = async (req, res) => {
 };
 
 export const create = async (req, res) => {
- // метод создания нового поста
+  // метод создания нового поста
   try {
     const doc = new PostModel({
       title: req.body.title,
@@ -126,7 +125,7 @@ export const update = async (req, res) => {
   }
 };
 
-export const getLastTags = async (req, res,next) => {
+export const getLastTags = async (req, res, next) => {
   try {
     const posts = await PostModel.find().limit(5).exec();
 
@@ -134,8 +133,8 @@ export const getLastTags = async (req, res,next) => {
       .map((obj) => obj.tags)
       .flat()
       .slice(0, 5);
-      
-      res.json(tags)
+
+    res.json(tags);
   } catch (err) {
     console.log(err);
     res.status(500).json({
