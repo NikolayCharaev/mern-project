@@ -16,7 +16,7 @@ import { checkAuth, handleValidationsErrors } from './utils/index.js';
 
 mongoose
   .connect(
-    process.env.MONGODB_URI,
+    'mongodb+srv://admin:wwwwww@cluster0.m6dkocn.mongodb.net/blog?retryWrites=true&w=majority',
   ) // объясняю mongoose к какому серверу я хочу подключиться
   .then(() => {
     // если соединение прошло успешно - сработает этот код
@@ -78,7 +78,7 @@ app.patch(
 ); // обновление списка статей
 app.post('/posts', checkAuth, postCreateValidation, PostController.create); // создание статьи
 
-app.listen(process.env.PORT || 5555, (err) => {
+app.listen(5555, (err) => {
   // прослушивание сервера localhost:5555
   if (err) {
     return console.log(err);
